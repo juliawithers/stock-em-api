@@ -1,25 +1,26 @@
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
 const xss = require('xss')
 
 const StockService = {
     getAllInventory(knex, user_id) {
-        return knex.select('*').from('inventory').where('user_id', user_id)
+        return knex.select('*').from('inventories').where('user_id', user_id)
     },
     insertInventory(knex, newInventory) {
         // insert new inventory  
         return knex 
             .insert(newInventory)
-            .into('inventory')
+            .into('inventories')
             .returning('*')
             .then(rows => {
                 return rows[0]
             })
     },
-    updateInventory(knex, user_id, newInventoryFields) {
+    updateInventory(knex, id, newInventoryFields) {
         // update inventory
-        return knex('inventory')
-            .where({ user_id })
+        return knex('inventories')
+            .where('id', id)
             .update(newInventoryFields)
+            .returning('*')
             
     },
     cleanInventory(inventory){
@@ -28,8 +29,8 @@ const StockService = {
             user_id: inventory.user_id,
             sku: xss(inventory.sku),
             quantity: xss(inventory.quantity),
-            description: inventory.description, 
-            location: xss(inventory.location),
+            inv_description: inventory.inv_description, 
+            inv_location: xss(inventory.inv_location),
             date_added: xss(inventory.date_added)
         }
     },
@@ -46,11 +47,12 @@ const StockService = {
                 return rows[0]
             })
     },
-    updateSuppliers(knex, user_id, newSuppliersFields) {
+    updateSuppliers(knex, id, newSuppliersFields) {
         // update inventory
         return knex('suppliers')
-            .where({ user_id })
+            .where('id', id )
             .update(newSuppliersFields)
+            .returning('*')
             
     },
     cleanSupplier(supplier){
@@ -61,7 +63,7 @@ const StockService = {
             contact: xss(supplier.contact),
             phone: xss(supplier.phone),
             email: xss(supplier.email),
-            address: xss(supplier.address)
+            sup_address: xss(supplier.sup_address)
         }
     },
     getAllCustomers(knex, user_id) {
@@ -77,11 +79,12 @@ const StockService = {
                 return rows[0]
             })
     },
-    updateCustomers(knex, user_id, newCustomersFields) {
+    updateCustomers(knex, id, newCustomersFields) {
         // update inventory
         return knex('customers')
-            .where({ user_id })
+            .where('id', id)
             .update(newCustomersFields)
+            .returning('*')
             
     },
     cleanCustomers(customer){
@@ -103,7 +106,7 @@ const StockService = {
         // insert new user data   
         return knex 
             .insert(newOrder)
-            .into('suppliers')
+            .into('orders')
             .returning('*')
             .then(rows => {
                 return rows[0]
@@ -111,12 +114,13 @@ const StockService = {
     },
     cleanOrders(order){
         return cleanedOrder = {
+            id: order.id,
             user_id: order.user_id,
             company: order.company,
             sku: order.sku,
             quantity: xss(order.quantity),
-            description: order.description, 
-            order: xss(order.order),
+            inv_description: order.inv_description, 
+            cust_order: xss(order.cust_order),
             date_entered: order.date_entered
         }
     },
@@ -133,8 +137,14 @@ const StockService = {
                 return rows[0]
             })
     },
-    cleanSkus(object){
-        return object
+    cleanSkus(sku){
+        return cleanedSku = {
+            id: sku.id,
+            user_id: sku.user_id,
+            sku: xss(sku.sku),
+            inv_description: xss(sku.inv_description),
+            date_added: sku.date_added
+        }
     },
 }
 // ENDPOINTS: 
