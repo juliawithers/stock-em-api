@@ -1,5 +1,8 @@
+
+require('dotenv').config()
 const knex = require('knex')
 const app = require('../src/app')
+
 // const { makeUsersArray } = require('./stock-em.fixtures')
 const { makeInventoriesArray } = require('./stock-em.fixtures')
 const { makeCustomersArray } = require('./stock-em.fixtures')
@@ -40,7 +43,6 @@ describe.only('Stock-Em! Endpoints', function () {
     describe(`GET /inventory`, () => {
         context(`gets all inventory related to user_id`, () => {
             const testInventory = makeInventoriesArray()
-
             beforeEach('insert inventory', () => {
                 return db
                     .into('inventories')
@@ -49,10 +51,12 @@ describe.only('Stock-Em! Endpoints', function () {
 
             it(`responds with 200 and the full list of inventory`, () => {
                 const expectedInventory = testInventory.filter(item => item.user_id === 1);
-
+                let userId = {
+                    user_id: 1
+                }
                 return supertest(app)
                     .get(`api/stock-em/inventory`)
-                    .send({ user_id: 1 })
+                    .send(userId)
                     .expect(200)
                     .expect(expectedInventory)
             })
@@ -68,7 +72,6 @@ describe.only('Stock-Em! Endpoints', function () {
                     .into('inventories')
                     .insert(testInventory)
             })
-
             it(`responds with 201 and returns item object after insertion`, () => {
                 const testLineItem = {
                     id: 9,
@@ -115,7 +118,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 return supertest(app)
                     .patch(`api/stock-em/inventory`)
                     .send(testLineItem)
-                    .expect(200)
+                    .expect(201)
                     .expect(testLineItem)
             })
         })
@@ -188,18 +191,26 @@ describe.only('Stock-Em! Endpoints', function () {
                 const testSupplier = {
                     id: testId,
                     user_id: testUser_id,
-                    company: "Newly UPDATED company",
-                    contact: "John Doe",
-                    phone: "111-111-1112",
-                    email: "111222@gmail.com",
-                    sup_address: "1234 Main St., Nowhere USA"
+                    company: 'Newly UPDATED company',
+                    contact: 'John Doe',
+                    phone: '111-111-1112',
+                    email: '111222@gmail.com',
+                    sup_address: '1234 Main St., Nowhere USA'
                 }
                     
                 return supertest(app)
                     .patch('/api/stock-em/suppliers')
                     .send(testSupplier)
                     .expect(201)
-                    .expect(testSupplier)    
+                    .expect(res => {
+                        expect(testSupplier.id).to.eql(res.body.id)
+                        expect(testSupplier.user_id).to.eql(res.body.user_id)
+                        expect(testSupplier.company).to.eql(res.body.company)
+                        expect(testSupplier.contact).to.eql(res.body.contact)
+                        expect(testSupplier.phone).to.eql(res.body.phone)
+                        expect(testSupplier.email).to.eql(res.body.email)
+                        expect(testSupplier.sup_address).to.eql(res.body.sup_address)
+                    })    
             })
         })
     })
@@ -280,7 +291,7 @@ describe.only('Stock-Em! Endpoints', function () {
                     bill_address: "1234 Main St., Nowhere USA",
                     ship_address: "1234 Main St., Nowhere USA"
                 }
-                    
+                     
                 return supertest(app)
                     .patch('/api/stock-em/customers')
                     .send(testCustomer)
@@ -306,7 +317,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const expectedOrders = testOrders.filter(item => item.user_id === 1);
 
                 return supertest(app)
-                    .get(`api/stock-em/orders`)
+                    .get(`api/stock-em/past-orders`)
                     .send({ user_id: 1 })
                     .expect(200)
                     .expect(expectedOrders)
@@ -337,10 +348,20 @@ describe.only('Stock-Em! Endpoints', function () {
                 }
                     
                 return supertest(app)
-                    .post('/api/stock-em/orders')
+                    .post('/api/stock-em/past-orders')
                     .send(testOrder)
                     .expect(201)
-                    .expect(testOrder)    
+                    .expect(res=>{
+                        expect(res.body.id).to.eql(testOrder.id)
+                        expect(res.body.user_id).to.eql(testOrder.user_id)
+                        expect(res.body.company).to.eql(testOrder.company)
+                        expect(res.body.sku).to.eql(testOrder.sku.toString())
+                        expect(res.body.quantity).to.eql(testOrder.quantity)
+                        expect(res.body.inv_description).to.eql(testOrder.inv_description)
+                        expect(res.body.cust_order).to.eql(testOrder.cust_order)
+                        expect(res.body.sup_order).to.eql(testOrder.sup_order)
+                        expect(res.body.date_entered).to.eql(testOrder.date_entered)
+                    })    
             })
         })
     })
@@ -349,14 +370,12 @@ describe.only('Stock-Em! Endpoints', function () {
     // SKUs: 
     describe(`GET /skus`, () => {
         context(`given data in the database`, () => {
-            const testSkus = makeSkusArray;
+            const testSkus = makeSkusArray();
             beforeEach('insert skus', () => {
                 return db
                     .into('skus')
                     .insert(testSkus)
             })
-
-
             it(`responds with 200 and returns the skus associated with the given user_id`, () => {
                 const expectedSkus = testSkus.filter(item => item.user_id === 1);
 
@@ -388,10 +407,16 @@ describe.only('Stock-Em! Endpoints', function () {
                 }
                     
                 return supertest(app)
-                    .post('/api/stock-em/sku')
+                    .post('/api/stock-em/skus')
                     .send(testSku)
                     .expect(201)
-                    .expect(testSku)    
+                    .expect(res => {
+                        expect(res.body.id).to.eql(testSku.id)
+                        expect(res.body.user_id).to.eql(testSku.user_id)
+                        expect(res.body.sku).to.eql(testSku.sku.toString())
+                        expect(res.body.inv_description).to.eql(testSku.inv_description)
+                        expect(res.body.date_entered).to.eql(testSku.date_entered)
+                    })    
             })
         })
     })

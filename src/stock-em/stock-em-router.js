@@ -21,15 +21,11 @@ StockRouter
         // GET WORKS 6/24
         // can use select from order by date_added to organize by date. 
         const user_id = req.body.user_id;
-        console.log(user_id)
         const knexInstance = req.app.get('db');
         StockService.getAllInventory(knexInstance,user_id)
         .then(inventory => {
-            if (!inventory) {
-                logger.error(`No inventory for this user`)
-                res.json([]); 
-            }
-            res.json(inventory.map(item => {
+            console.log(inventory)
+            return res.status(200).json(inventory.map(item => {
                 return StockService.cleanInventory(item)
             }))
         })
@@ -41,7 +37,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.insertInventory(knexInstance,newInv)
         .then(item => {
-            res.status(200).json(item)
+            res.status(201).json(item)
         })
         .catch(next)
     })
@@ -51,7 +47,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.updateInventory(knexInstance,updInv.id,updInv)
         .then(item => {
-            res.status(200).json(item)
+            res.status(201).json(item)
         })
         .catch(next)
     })
@@ -72,7 +68,7 @@ StockRouter
                 logger.error(`No suppliers listed for this user`)
                 res.json([]);
             }
-            res.json(suppliers.map(supplier => {
+            res.status(200).json(suppliers.map(supplier => {
                 return StockService.cleanSupplier(supplier)
             }))
         })
@@ -84,7 +80,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.insertSuppliers(knexInstance,newSup)
         .then(supplier => {
-            res.status(200).json(supplier)
+            res.status(201).json(supplier)
         })
         .catch(next)
     })
@@ -94,7 +90,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.updateSuppliers(knexInstance,updSup.id,updSup)
         .then(supplier => {
-            res.status(200).json(supplier)
+            res.status(201).json(supplier[0])
         })
         .catch(next)
     })
@@ -115,7 +111,7 @@ StockRouter
                 logger.error(`No customers listed for this user`)
                 res.json([]);
             }
-            res.json(customers.map(customer => {
+            res.status(200).json(customers.map(customer => {
                 return StockService.cleanCustomers(customer)
             }))
         })
@@ -127,7 +123,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.insertCustomers(knexInstance,newCust)
         .then(customer => {
-            res.status(200).json(customer)
+            res.status(201).json(customer)
         })
         .catch(next)
     })
@@ -137,7 +133,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.updateCustomers(knexInstance,updCust.id,updCust)
         .then(customer => {
-            res.status(200).json(customer)
+            res.status(201).json(customer[0])
         })
         .catch(next)
     })
@@ -157,7 +153,7 @@ StockRouter
                 logger.error(`No customers listed for this user`)
                 res.json([]);
             }
-            res.json(orders.map(orders => {
+            res.status(200).json(orders.map(orders => {
                 return StockService.cleanOrders(orders)
             }))
         })
@@ -169,10 +165,11 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.insertOrders(knexInstance,newOrder)
         .then(order => {
-            res.status(200).json(order)
+            res.status(201).json(order)
         })
         .catch(next)
     })
+
 // SKUs
     // GET
     // POST
@@ -188,7 +185,7 @@ StockRouter
                 logger.error(`No skus listed for this user`)
                 res.json([]);
             }
-            res.json(skus.map(skus => {
+            res.status(200).json(skus.map(skus => {
                 return StockService.cleanSkus(skus)
             }))
         })
@@ -200,7 +197,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.insertSkus(knexInstance,newSku)
         .then(sku => {
-            res.status(200).json(sku)
+            res.status(201).json(sku)
         })
         .catch(next)
     })

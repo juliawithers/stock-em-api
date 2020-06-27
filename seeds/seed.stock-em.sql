@@ -1,10 +1,10 @@
-INSERT INTO users (username, passw, date_created)
+INSERT INTO users (username, passw)
 VALUES
 ('user1','user1!'),
 ('user2','user2!')
 ;
 
-INSERT INTO inventories (user_id, sku, quantity, inv_description, inv_location, date_added)
+INSERT INTO inventories (user_id, sku, quantity, inv_description, inv_location, date_entered)
 VALUES
   (1,12345, 400, 'relay', 'M01','2020-1-1'),
   (1,23456, 400, 'capacitor', 'M02','2020-1-1'),
@@ -39,25 +39,25 @@ VALUES
 (2, 'That INC LLC', 'Areal Person', '222-222-2222', 'areal@gmail.com', '4321 Main St. Somewhere USA', '4321 Main St. Somewhere USA')
 ;
 
-INSERT INTO orders (user_id, sku, quantity, inv_description, cust_order, sup_order)
+INSERT INTO orders (user_id, company, sku, quantity, inv_description, cust_order, sup_order, date_entered)
 VALUES
-(1, 12345, 200, 'relay', 'PO01',''),
-(1, 23456, 200, 'capacitor', 'PO02',''),
-(1, 12345, 100, 'relay', 'PO03',''),
-(1, 34567, 200, 'overload', 'PO04',''),
-(2, 12345, 200, 'relay', 'PO01',''),
-(2, 23456, 200, 'capacitor', 'PO02',''),
-(2, 34567, 200, 'overload', 'PO03',''),
-(1, 12345, 200, 'relay', '','SO01'),
-(1, 23456, 200, 'capacitor', '','SO02'),
-(1, 12345, 100, 'relay', '','SO03'),
-(1, 34567, 200, 'overload', '','SO04'),
-(2, 12345, 200, 'relay', '','SO01'),
-(2, 23456, 200, 'capacitor', '','SO02'),
-(2, 34567, 200, 'overload', '','SO03')
+(1,'Company 1', 12345, 200, 'relay', 'PO01','', '2019-7-1'),
+(1,'Company 1', 23456, 200, 'capacitor', 'PO02','', '2019-4-9'),
+(1,'Company 2', 12345, 100, 'relay', 'PO03','', '2019-10-7'),
+(1,'Company 2', 34567, 200, 'overload', 'PO04','', '2019-8-12'),
+(2,'Company 1', 12345, 200, 'relay', 'PO01','', '2019-7-10'),
+(2,'Company 1', 23456, 200, 'capacitor', 'PO02','', '2019-9-7'),
+(2,'Company 2', 34567, 200, 'overload', 'PO03','', '2019-12-7'),
+(1,'Company 12', 12345, 200, 'relay', '','SO01', '2019-12-7'),
+(1,'Company 12', 23456, 200, 'capacitor', '','SO02', '2019-3-7'),
+(1,'Company 11', 12345, 100, 'relay', '','SO03', '2019-3-3'),
+(1,'Company 11', 34567, 200, 'overload', '','SO04', '2019-7-10'),
+(2,'Company 11', 12345, 200, 'relay', '','SO01', '2019-7-7'),
+(2,'Company 12', 23456, 200, 'capacitor', '','SO02', '2019-1-7'),
+(2,'Company 11', 34567, 200, 'overload', '','SO03', '2019-10-7')
 ;
 
-INSERT INTO skus (user_id, sku, inv_description, date_added)
+INSERT INTO skus (user_id, sku, inv_description, date_entered)
 VALUES
 (1, 12345, 'relay','2020-1-1'),
 (1, 23456, 'capacitor','2020-1-2'),
