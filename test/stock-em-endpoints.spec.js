@@ -1,4 +1,3 @@
-
 require('dotenv').config()
 const knex = require('knex')
 const app = require('../src/app')
@@ -10,6 +9,7 @@ const { makeSuppliersArray } = require('./stock-em.fixtures')
 const { makeOrdersArray } = require('./stock-em.fixtures')
 const { makeSkusArray } = require('./stock-em.fixtures')
 const supertest = require('supertest')
+const { expect } = require('chai')
 
 
 describe.only('Stock-Em! Endpoints', function () {
@@ -55,10 +55,12 @@ describe.only('Stock-Em! Endpoints', function () {
                     user_id: 1
                 }
                 return supertest(app)
-                    .get(`api/stock-em/inventory`)
+                    .get(`/api/stock-em/inventory`)
                     .send(userId)
                     .expect(200)
-                    .expect(expectedInventory)
+                    .expect(res=>{
+                        expect(expectedInventory)
+                    })
             })
         })
     })
@@ -76,7 +78,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const testLineItem = {
                     id: 9,
                     user_id: 1,
-                    sku: 12345,
+                    sku: '12345',
                     quantity: 100,
                     inv_description: 'relay',
                     inv_location: 'M10',
@@ -84,7 +86,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 }
 
                 return supertest(app)
-                    .post(`api/stock-em/inventory`)
+                    .post(`/api/stock-em/inventory`)
                     .send(testLineItem)
                     .expect(201)
                     .expect(testLineItem)
@@ -108,7 +110,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const testLineItem = {
                     id: testId,
                     user_id: testUser_id,
-                    sku: 12345,
+                    sku: '12345',
                     quantity: 100,
                     inv_description: 'relay',
                     inv_location: 'M10',
@@ -116,10 +118,17 @@ describe.only('Stock-Em! Endpoints', function () {
                 }
 
                 return supertest(app)
-                    .patch(`api/stock-em/inventory`)
+                    .patch(`/api/stock-em/inventory`)
                     .send(testLineItem)
                     .expect(201)
-                    .expect(testLineItem)
+                    .expect(res => {
+                        expect(res.body.id).to.eql(testLineItem.id)
+                        expect(res.body.user_id).to.eql(testLineItem.user_id)
+                        expect(res.body.quantity).to.eql(testLineItem.quantity)
+                        expect(res.body.inv_description).to.eql(testLineItem.inv_description)
+                        expect(res.body.inv_location).to.eql(testLineItem.inv_location)
+                        expect(res.body.date_entered).to.eql(testLineItem.date_entered)
+                    })
             })
         })
     })
@@ -139,7 +148,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const expectedSuppliers = testSuppliers.filter(item => item.user_id === 1);
 
                 return supertest(app)
-                    .get(`api/stock-em/suppliers`)
+                    .get(`/api/stock-em/suppliers`)
                     .send({ user_id: 1 })
                     .expect(200)
                     .expect(expectedSuppliers)
@@ -231,7 +240,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const expectedCustomers = testCustomers.filter(item => item.user_id === 1);
 
                 return supertest(app)
-                    .get(`api/stock-em/customers`)
+                    .get(`/api/stock-em/customers`)
                     .send({ user_id: 1 })
                     .expect(200)
                     .expect(expectedCustomers)
@@ -317,7 +326,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const expectedOrders = testOrders.filter(item => item.user_id === 1);
 
                 return supertest(app)
-                    .get(`api/stock-em/past-orders`)
+                    .get(`/api/stock-em/past-orders`)
                     .send({ user_id: 1 })
                     .expect(200)
                     .expect(expectedOrders)
@@ -356,7 +365,7 @@ describe.only('Stock-Em! Endpoints', function () {
                         expect(res.body.user_id).to.eql(testOrder.user_id)
                         expect(res.body.company).to.eql(testOrder.company)
                         expect(res.body.sku).to.eql(testOrder.sku.toString())
-                        expect(res.body.quantity).to.eql(testOrder.quantity)
+                        expect(Number(res.body.quantity)).to.eql(testOrder.quantity)
                         expect(res.body.inv_description).to.eql(testOrder.inv_description)
                         expect(res.body.cust_order).to.eql(testOrder.cust_order)
                         expect(res.body.sup_order).to.eql(testOrder.sup_order)
@@ -380,7 +389,7 @@ describe.only('Stock-Em! Endpoints', function () {
                 const expectedSkus = testSkus.filter(item => item.user_id === 1);
 
                 return supertest(app)
-                    .get(`api/stock-em/skus`)
+                    .get(`/api/stock-em/skus`)
                     .send({ user_id: 1 })
                     .expect(200)
                     .expect(expectedSkus)

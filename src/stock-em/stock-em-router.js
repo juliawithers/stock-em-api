@@ -24,8 +24,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.getAllInventory(knexInstance,user_id)
         .then(inventory => {
-            console.log(inventory)
-            return res.status(200).json(inventory.map(item => {
+            res.status(200).json(inventory.map(item => {
                 return StockService.cleanInventory(item)
             }))
         })
@@ -47,7 +46,7 @@ StockRouter
         const knexInstance = req.app.get('db');
         StockService.updateInventory(knexInstance,updInv.id,updInv)
         .then(item => {
-            res.status(201).json(item)
+            res.status(201).json(item[0])
         })
         .catch(next)
     })

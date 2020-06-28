@@ -3,7 +3,6 @@ const xss = require('xss')
 
 const StockService = {
     getAllInventory(knex, user_id) {
-        console.log(user_id)
         return knex.select('*').from('inventories').where('user_id', user_id)
     },
     insertInventory(knex, newInventory) {
@@ -119,9 +118,10 @@ const StockService = {
             user_id: order.user_id,
             company: order.company,
             sku: order.sku,
-            quantity: xss(order.quantity),
+            quantity: Number(xss(order.quantity)),
             inv_description: order.inv_description, 
             cust_order: xss(order.cust_order),
+            sup_order: xss(order.sup_order),
             date_entered: order.date_entered
         }
     },

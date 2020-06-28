@@ -28,7 +28,7 @@ function makeInventoriesArray() {
         {
             id: 1,
             user_id: 1,
-            sku: 12345,
+            sku: '12345',
             quantity: 100, 
             inv_description: 'relay',
             inv_location: 'M01',
@@ -37,7 +37,7 @@ function makeInventoriesArray() {
         {
             id: 2,
             user_id: 1,
-            sku: 12345,
+            sku: '12345',
             quantity: 300, 
             inv_description: 'relay',
             inv_location: 'M05',
@@ -46,7 +46,7 @@ function makeInventoriesArray() {
         {
             id: 3,
             user_id: 1,
-            sku: 23456,
+            sku: '23456',
             quantity: 100, 
             inv_description: 'capacitor',
             inv_location: 'M02',
@@ -55,7 +55,7 @@ function makeInventoriesArray() {
         {
             id: 4,
             user_id: 1,
-            sku: 34567,
+            sku: '34567',
             quantity: 100, 
             inv_description: 'overload',
             inv_location: 'M03',
@@ -64,7 +64,7 @@ function makeInventoriesArray() {
         {
             id: 5,
             user_id: 2,
-            sku: 12345,
+            sku: '12345',
             quantity: 110, 
             inv_description: 'relay',
             inv_location: 'M01',
@@ -73,7 +73,7 @@ function makeInventoriesArray() {
         {
             id: 6,
             user_id: 2,
-            sku: 12345,
+            sku: '12345',
             quantity: 350, 
             inv_description: 'relay',
             inv_location: 'M05',
@@ -82,7 +82,7 @@ function makeInventoriesArray() {
         {
             id: 7,
             user_id: 2,
-            sku: 23456,
+            sku: '23456',
             quantity: 50, 
             inv_description: 'capacitor',
             inv_location: 'M02',
@@ -91,7 +91,7 @@ function makeInventoriesArray() {
         {
             id: 8,
             user_id: 2,
-            sku: 34567,
+            sku: '34567',
             quantity: 50, 
             inv_description: 'overload',
             inv_location: 'M03',
@@ -193,7 +193,7 @@ function makeOrdersArray() {
             id: 1,
             user_id: 1,
             company:"Some Company",
-            sku: 1234,
+            sku: '1234',
             quantity: 100,
             inv_description: "capacitor",
             cust_order: "PO123",
@@ -204,7 +204,7 @@ function makeOrdersArray() {
             id: 2,
             user_id: 1,
             company:"Some Company Two",
-            sku: 1234,
+            sku: '1234',
             quantity: 50,
             inv_description: "capacitor",
             cust_order: "PO1234",
@@ -215,7 +215,7 @@ function makeOrdersArray() {
             id: 3,
             user_id: 1,
             company:"Some Company",
-            sku: 1234,
+            sku: '1234',
             quantity: 100,
             inv_description: "capacitor",
             cust_order: "",
@@ -226,7 +226,7 @@ function makeOrdersArray() {
             id: 4,
             user_id: 1,
             company:"Some Company Two",
-            sku: 1234,
+            sku: '1234',
             quantity: 50,
             inv_description: "capacitor",
             cust_order: "",
@@ -237,7 +237,7 @@ function makeOrdersArray() {
             id: 5,
             user_id: 2,
             company:"Some Company",
-            sku: 1234,
+            sku: '1234',
             quantity: 100,
             inv_description: "capacitor",
             cust_order: "PO123",
@@ -248,7 +248,7 @@ function makeOrdersArray() {
             id: 6,
             user_id: 2,
             company:"Some Company Two",
-            sku: 1234,
+            sku: '1234',
             quantity: 50,
             inv_description: "capacitor",
             cust_order: "PO1234",
@@ -264,42 +264,42 @@ function makeSkusArray() {
         {
             id: 1,
             user_id: 1,
-            sku:1234,
+            sku:'1234',
             inv_description: "capacitor",
             date_entered: "2020-5-5"
         },
         {
             id: 2,
             user_id: 1,
-            sku:12344,
+            sku:'12344',
             inv_description: "overload",
             date_entered: "2020-5-1"
         },
         {
             id: 3,
             user_id: 1,
-            sku:5555,
+            sku:'5555',
             inv_description: "relay",
             date_entered: "2020-5-1"
         },
         {
             id: 4,
             user_id: 1,
-            sku:12345,
+            sku:'12345',
             inv_description: "overload",
             date_entered: "2020-5-1"
         },
         {
             id: 5,
             user_id: 2,
-            sku:2222,
+            sku:'2222',
             inv_description: "relay",
             date_entered: "2020-5-5"
         },
         {
             id: 6,
             user_id: 2,
-            sku:223344,
+            sku:'223344',
             inv_description: "overload",
             date_entered: "2020-5-1"
         }
