@@ -6,7 +6,6 @@ const StockService = {
         return knex.select('*').from('inventories').where('user_id', user_id)
     },
     insertInventory(knex, newInventory) {
-        // insert new inventory  
         return knex 
             .insert(newInventory)
             .into('inventories')
@@ -16,7 +15,6 @@ const StockService = {
             })
     },
     updateInventory(knex, id, newInventoryFields) {
-        // update inventory
         return knex('inventories')
             .where('id', id)
             .update(newInventoryFields)
@@ -42,8 +40,7 @@ const StockService = {
     getAllSuppliers(knex, user_id) {
         return knex.select('*').from('suppliers').where('user_id', user_id)
     },
-    insertSuppliers(knex, newSupplier) {
-        // insert new user data   
+    insertSuppliers(knex, newSupplier) { 
         return knex 
             .insert(newSupplier)
             .into('suppliers')
@@ -53,7 +50,6 @@ const StockService = {
             })
     },
     updateSuppliers(knex, id, newSuppliersFields) {
-        // update inventory
         return knex('suppliers')
             .where('id', id )
             .update(newSuppliersFields)
@@ -75,7 +71,6 @@ const StockService = {
         return knex.select('*').from('customers').where('user_id', user_id)
     },
     insertCustomers(knex, newCustomer) {
-        // insert new user data   
         return knex 
             .insert(newCustomer)
             .into('customers')
@@ -85,7 +80,6 @@ const StockService = {
             })
     },
     updateCustomers(knex, id, newCustomersFields) {
-        // update inventory
         return knex('customers')
             .where('id', id)
             .update(newCustomersFields)
@@ -108,7 +102,6 @@ const StockService = {
         return knex.select('*').from('orders').where('user_id', user_id)
     },
     insertOrders(knex, newOrder) {
-        // insert new user data   
         return knex 
             .insert(newOrder)
             .into('orders')
@@ -133,8 +126,7 @@ const StockService = {
     getAllSkus(knex, user_id) {
         return knex.select('*').from('skus').where('user_id', user_id)
     },
-    insertSkus(knex, newSku) {
-        // insert new user data   
+    insertSkus(knex, newSku) { 
         return knex 
             .insert(newSku)
             .into('skus')
@@ -153,26 +145,5 @@ const StockService = {
         }
     },
 }
-// ENDPOINTS: 
-
-// User - maybe if I have time, still going to add user_id to every submit
-// Inventory
-    // GET
-    // POST
-    // PATCH
-// Suppliers
-    // GET
-    // POST
-    // PATCH - maybe
-// Customers
-    // GET
-    // POST
-    // PATCH
-// Orders
-    // GET
-    // POST
-// SKUs
-    // GET
-    // POST
     
-    module.exports = StockService
+module.exports = StockService
