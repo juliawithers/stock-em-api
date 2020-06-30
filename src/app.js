@@ -20,9 +20,7 @@ app.use(cors())
 // );
 
 app.use('/api/stock-em',StockRouter)
-// app.get('/', (req, res) => {
-//     res.send('Hello, world!')
-// })
+
 app.use(errorHandler)
 
 module.exports = app

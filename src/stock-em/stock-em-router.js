@@ -53,7 +53,6 @@ StockRouter
     })
     .delete(bodyParser,(req,res,next)=>{
         const id = req.body.id;
-        console.log(id)
         const knexInstance = req.app.get('db');
         StockService.deleteInventory(knexInstance,id)
         .then( item =>{
