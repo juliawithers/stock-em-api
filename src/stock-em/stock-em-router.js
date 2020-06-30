@@ -21,7 +21,8 @@ StockRouter
         // the user must click on enter to open, so we will use enter as login confirmation for now. 
         // GET WORKS 6/24
         // can use select from order by date_added to organize by date. 
-        const user_id = req.body.user_id;
+        const user_id = Number(req.body.user_id);
+
         const knexInstance = req.app.get('db');
         StockService.getAllInventory(knexInstance,user_id)
         .then(inventory => {
