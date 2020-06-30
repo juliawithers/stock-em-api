@@ -34,6 +34,11 @@ const StockService = {
             date_entered: xss(inventory.date_entered)
         }
     },
+    deleteInventory(knex, id){
+        return knex('inventories')
+            .where('id', id)
+            .delete()
+    },
     getAllSuppliers(knex, user_id) {
         return knex.select('*').from('suppliers').where('user_id', user_id)
     },

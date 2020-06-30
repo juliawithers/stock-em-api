@@ -133,6 +133,27 @@ describe.only('Stock-Em! Endpoints', function () {
         })
     })
 
+    describe(`DELETE /inventory`, () => {
+        context(`given data in the database`, () => {
+            const testInventory = makeInventoriesArray()
+
+            beforeEach('insert inventories', () => {
+                return db
+                    .into('inventories')
+                    .insert(testInventory)
+            })
+
+            it(`responds with 204`, () => {
+                const testId = testInventory[0].id;
+                
+                return supertest(app)
+                    .delete(`/api/stock-em/inventory`)
+                    .send({id: testId})
+                    .expect(204)
+            })
+        })
+    })
+
     // ----------------------------------------
     // Suppliers: 
     describe(`GET /suppliers`, () => {
