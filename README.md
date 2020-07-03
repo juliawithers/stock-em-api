@@ -16,12 +16,12 @@ id - primary key | user id - integer not null | sku - text not null | quantity -
 
 __SUPPLIERS__
 id | user_id | company | contact | phone | email | sup_address
----- | ---- | ---- | ---- | ---- | ---- 
+---- | ---- | ---- | ---- | ---- | ---- | ---- 
 id - primary key | user id - integer not null | supplier company name - text not null | supplier contact name - text not null | supplier contact phone - text not null | supplier contact email - text not null | supplier address - text not null
 
 __CUSTOMERS__
 id | user_id | company | contact | phone | email | bill_address | ship_address
----- | ---- | ---- | ---- | ---- | ---- | ----
+---- | ---- | ---- | ---- | ---- | ---- | ---- | ----
 id - primary key | user id - integer not null | customer company name - text not null | customer contact name - text not null | customer contact phone - text not null | customer contact email - text not null | customer billing address - text not null | customer ship-to address - text not null
 
 __ORDERS__
