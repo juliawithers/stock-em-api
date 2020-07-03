@@ -4,6 +4,7 @@
 The database is hosted on the heroku database addon. There are six tables: 
 
 *User table is not yet implemented.
+
 __USERS__
 id | username | passw  
 -- | -- | -- 
