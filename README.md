@@ -1,5 +1,9 @@
 # Stock'Em! API
 
+Link to live app: https://stock-em.vercel.app/
+
+Link to Client Repo: https://github.com/juliawithers/stock-em
+
 ## The Database
 The database is hosted on the heroku database addon. There are six tables: 
 
